@@ -1,0 +1,29 @@
+name: Run uupdump script to get Windows iso file and upload it to OneDrive
+
+on: [push]
+
+jobs:
+  Build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Doploy uupdump
+        run: |
+          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/blob/main/22623.1037_amd64_zh-cn_professional_3ca610f8_convert.zip?raw=true" -OutFile uupdump.zip
+          unzip uupdump.zip
+        shell: powershell
+
+      - name: Run uupdump
+        run: ./uup_download_windows.cmd
+        shell: powershell
+        
+      - name: Deploy rclone
+        run: |
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.61.1/rclone-v1.61.1-windows-amd64.zip' -OutFile rclone-v1.61.1-windows-amd64.zip
+          unzip rclone-v1.61.1-windows-amd64.zip
+          echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
+        shell: powershell
+
+      - name: Upload the file to OneDrive with rclone
+        run: rclone-v1.61.1-windows-amd64/rclone --config rclone.conf copy -P *.iso 'OneDrive_ty_30GB:'
+        shell: powershell
