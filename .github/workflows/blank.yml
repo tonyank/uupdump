@@ -11,16 +11,19 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # - name: Doploy uupdump
+      - name: Doploy uupdump
         # 在 PowerShell 环境下，(1)下载 uupdump zip 压缩文件，(2)解压
         # shell: powershell
-        # run: |
-          # Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
-          # tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+        run: |
+          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+          tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
 
-      # - name: Run uupdump
-        # shell: powershell
-        # run: ./uup_download_windows.cmd
+      - name: Run uupdump
+        shell: powershell
+        run: |
+          ./uup_download_windows.cmd
+          mkdir "win11-20240831"
+          move *.ISO "win11-20240831"
         
       - name: Deploy rclone
         shell: pwsh
@@ -29,15 +32,15 @@ jobs:
           unzip rclone-v1.67.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
 
-      - name: Test-生成2个 iso 后缀的文件，并上传到 OneDrive
-        shell: powershell
-        run: |
-          echo "fuck you, 123" > test-1.iso
-          echo "fuck you, 456" > test-2.ISO
-          mkdir test20240831
-          mv test-1.iso test20240831
-          mv test-2.ISO test20240831 
+      # - name: Test-生成2个 iso 后缀的文件，并上传到 OneDrive
+        # shell: powershell
+        # run: |
+          # echo "fuck you, 123" > test-1.iso
+          # echo "fuck you, 456" > test-2.ISO
+          # mkdir test20240831
+          # mv test-1.iso test20240831
+          # mv test-2.ISO test20240831 
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P test20240831 "OneDrive_ty_30GB:"
+        run: rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240831" "OneDrive_ty_30GB:"
