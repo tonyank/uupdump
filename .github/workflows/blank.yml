@@ -2,7 +2,7 @@
 # GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
 # 编辑日期：2023年7月11日
 # A
-name: Run uupdump script to get Windows 11 iso file and upload it to OneDrive
+name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
 
 on: [push]
 
@@ -11,16 +11,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Doploy uupdump
+      # - name: Doploy uupdump
         # 在 PowerShell 环境下，(1)下载 uupdump zip 压缩文件，(2)解压
-        shell: powershell
-        run: |
-          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
-          tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+        # shell: powershell
+        # run: |
+          # Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+          # tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
 
-      - name: Run uupdump
-        shell: powershell
-        run: ./uup_download_windows.cmd
+      # - name: Run uupdump
+        # shell: powershell
+        # run: ./uup_download_windows.cmd
         
       - name: Deploy rclone
         shell: pwsh
@@ -28,6 +28,12 @@ jobs:
           Invoke-WebRequest 'https://downloads.rclone.org/v1.67.0/rclone-v1.67.0-windows-amd64.zip' -OutFile rclone-v1.67.0-windows-amd64.zip
           unzip rclone-v1.67.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
+
+      - name: Test-生成2个 iso 后缀的文件，并上传到 OneDrive
+        shell: powershell
+        run: |
+          echo "fuck you, 123" > test-1.iso
+          echo "fuck you, 456" > test-1.ISO
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
