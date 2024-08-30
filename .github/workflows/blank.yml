@@ -40,4 +40,4 @@ jobs:
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P mv test-1.iso test20240831 "OneDrive_ty_30GB:"
+        run: rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P test20240831 "OneDrive_ty_30GB:"
