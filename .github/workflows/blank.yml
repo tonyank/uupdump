@@ -15,13 +15,10 @@ jobs:
         # 在 PowerShell 环境下，(1)下载 uupdump zip 压缩文件，(2)解压
         shell: pwsh
         run: |
-          # Invoke-WebRequest "https://github.com/tonyank/20220421-uup-win11/blob/main/22000.651_amd64_zh-cn_professional_c299d2e1_convert.zip?raw=true" -OutFile uupdump.zip
-          # unzip uupdump.zip
           Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
           tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
 
       - name: Run uupdump
-        # 修改 uup_download_windows.cmd 文件，添加命令 (Get-Content aria2_script*.txt) -Replace ('world', 'earth') | Set-Content test.txt。运行修改后的 up_download_windows.cmd 文件。
         shell: pwsh
         run: ./uup_download_windows.cmd
         
