@@ -15,7 +15,7 @@ jobs:
         # 在 PowerShell 环境下，(1)下载 uupdump zip 压缩文件，(2)解压
         shell: powershell
         run: |
-          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
           tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
 
       - name: Run uupdump
