@@ -1,7 +1,6 @@
-# Q
 # GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
-# 编辑日期：2023年7月11日
-# A
+# 最后一次编辑日期：2024年9月2日
+
 name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
 
 on: [push]
@@ -11,9 +10,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Doploy uupdump
-        # 在 PowerShell 环境下，(1)下载 uupdump zip 压缩文件，(2)解压
-        # shell: powershell
+      - name: Deploy uupdump
+        shell: powershell
         run: |
           Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
           tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
@@ -22,25 +20,42 @@ jobs:
         shell: powershell
         run: |
           ./uup_download_windows.cmd
-          mkdir "win11-20240831"
-          move *.ISO "win11-20240831"
+          mkdir "win11-20240912"
+          move *.ISO "win11-20240912"
+
+      - name: 查看文件目录。
+        shell: powershell
+        run: ls -R
+
+      - name: 挂载 ISO 文件。
+        shell: powershell
+        run: |
+          mkdir temp
+          $IsoPath = './win11-20240912/*.ISO'
+          $MountPath = './temp'
+          Mount-DiskImage -ImagePath $IsoPath
+
+      - name: (1)删除 UUPs 文件夹以增加磁盘空间。(2)提取 install.wim 文件。
+        shell: powershell
+        run: |
+          rm -rf ./UUPs
+          $SourcePath = (Get-DiskImage -ImagePath $IsoPath | Get-Volume).DriveLetter + ':temp\sources\install.wim'
+          $DestinationPath = './temp/win11-install-20240912.wim'
+          Copy-Item -Path $SourcePath -Destination $DestinationPath
+
+      - name: Calculate md5 checksum
+        shell: powershell
+        run: |
+          md5sum win11-20240912
+          md5sum ./temp/win11-install-20240912.wim
         
       - name: Deploy rclone
-        shell: pwsh
+        shell: powershell
         run: |
-          Invoke-WebRequest 'https://downloads.rclone.org/v1.67.0/rclone-v1.67.0-windows-amd64.zip' -OutFile rclone-v1.67.0-windows-amd64.zip
-          unzip rclone-v1.67.0-windows-amd64.zip
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.68.0/rclone-v1.68.0-windows-amd64.zip' -OutFile rclone-v1.68.0-windows-amd64.zip
+          unzip rclone-v1.68.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
-
-      # - name: Test-生成2个 iso 后缀的文件，并上传到 OneDrive
-        # shell: powershell
-        # run: |
-          # echo "fuck you, 123" > test-1.iso
-          # echo "fuck you, 456" > test-2.ISO
-          # mkdir test20240831
-          # mv test-1.iso test20240831
-          # mv test-2.ISO test20240831 
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240831" "OneDrive_ty_30GB:"
+        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240912" "OneDrive_ty_30GB:"
