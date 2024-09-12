@@ -1,5 +1,5 @@
 # GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
-# 最后一次编辑日期：2024年9月2日
+# 最后一次编辑日期：2024年9月12日
 
 name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
 
@@ -13,8 +13,8 @@ jobs:
       - name: Deploy uupdump
         shell: powershell
         run: |
-          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar" -OutFile "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
-          tar -xf "26100.1591_amd64_zh-cn_professional_df9477d8_convert.tar"
+          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar" -OutFile "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
+          tar -xf "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
 
       - name: Run uupdump
         shell: powershell
