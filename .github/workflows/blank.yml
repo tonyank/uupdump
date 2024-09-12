@@ -23,6 +23,10 @@ jobs:
           mkdir "win11-20240912"
           move *.ISO "win11-20240912"
 
+      - name: 查看文件大小。
+        shell: powershell
+        run: du -sh *
+
       - name: 查看文件目录。
         shell: powershell
         run: ls -R
@@ -31,7 +35,7 @@ jobs:
         shell: powershell
         run: |
           mkdir temp
-          $IsoPath = './win11-20240912/*.ISO'
+          $IsoPath = './win11-20240912/26100.1742.240905-2116.GE_RELEASE_SVC_PROD1_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO.ISO'
           $MountPath = './temp'
           Mount-DiskImage -ImagePath $IsoPath
 
@@ -58,4 +62,4 @@ jobs:
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240912" "OneDrive_ty_30GB:"
+        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "temp/install.wim" "OneDrive_ty_30GB:"
