@@ -35,7 +35,7 @@ jobs:
         shell: powershell
         run: |
           mkdir temp
-          $IsoPath = './win11-20240912/26100.1742.240905-2116.GE_RELEASE_SVC_PROD1_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO.ISO'
+          $IsoPath = './win11-20240912/26100.1742.240905-2116.GE_RELEASE_SVC_PROD1_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO'
           $MountPath = './temp'
           Mount-DiskImage -ImagePath $IsoPath
 
