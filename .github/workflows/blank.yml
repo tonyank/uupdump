@@ -13,7 +13,7 @@ jobs:
       - name: Deploy rclone
         shell: powershell
         run: |
-          Invoke-WebRequest 'https://downloads.rclone.org/v1.67.0/rclone-v1.68.0-windows-amd64.zip' -OutFile rclone-v1.68.0-windows-amd64.zip
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.67.0/rclone-v1.67.0-windows-amd64.zip' -OutFile rclone-v1.67.0-windows-amd64.zip
           unzip rclone-v1.67.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
 
