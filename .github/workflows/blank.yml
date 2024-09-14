@@ -20,5 +20,5 @@ jobs:
       - name: Upload the file to OneDrive with rclone
         shell: powershell
         run: |
-          echo fuckme, baby > bitch.iso
-          rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P bitch.iso "OneDrive_ty_30GB:"
+          echo fuckme, baby > shit.iso
+          rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P shit.iso "OneDrive_ty_30GB:"
