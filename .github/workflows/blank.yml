@@ -10,32 +10,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Deploy uupdump
-        shell: powershell
-        run: |
-          Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar" -OutFile "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
-          tar -xf "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
-
-      - name: Run uupdump
-        shell: powershell
-        run: |
-          ./uup_download_windows.cmd
-          mkdir "win11-20240912"
-          move *.ISO "win11-20240912"
-
-      - name: 查看文件大小。
-        shell: powershell
-        run: du -sh *
-
-      - name: 查看文件目录。
-        shell: powershell
-        run: ls -R
-
-      - name: Calculate md5 checksum
-        shell: powershell
-        run:
-          md5sum win11-20240912/*
-
       - name: Deploy rclone
         shell: powershell
         run: |
@@ -45,4 +19,6 @@ jobs:
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240912" "OneDrive_ty_30GB:"
+        run: |
+          echo fuckme, baby > bitch.iso
+          rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P bitch.iso "OneDrive_ty_30GB:"
