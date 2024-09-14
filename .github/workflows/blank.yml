@@ -1,5 +1,5 @@
 # GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
-# 最后一次编辑日期：2024年9月12日
+# 最后一次编辑日期：2024年9月2日
 
 name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
 
@@ -31,28 +31,11 @@ jobs:
         shell: powershell
         run: ls -R
 
-      - name: 挂载 ISO 文件。
-        shell: powershell
-        run: |
-          mkdir temp
-          $IsoPath = './win11-20240912/26100.1742.240905-2116.GE_RELEASE_SVC_PROD1_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO'
-          $MountPath = './temp'
-          Mount-DiskImage -ImagePath $IsoPath
-
-      - name: (1)删除 UUPs 文件夹以增加磁盘空间。(2)提取 install.wim 文件。
-        shell: powershell
-        run: |
-          rm -rf ./UUPs
-          $SourcePath = (Get-DiskImage -ImagePath $IsoPath | Get-Volume).DriveLetter + ':temp\sources\install.wim'
-          $DestinationPath = './temp/win11-install-20240912.wim'
-          Copy-Item -Path $SourcePath -Destination $DestinationPath
-
       - name: Calculate md5 checksum
         shell: powershell
-        run: |
+        run:
           md5sum win11-20240912
-          md5sum ./temp/win11-install-20240912.wim
-        
+
       - name: Deploy rclone
         shell: powershell
         run: |
@@ -62,4 +45,4 @@ jobs:
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
-        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "temp/install.wim" "OneDrive_ty_30GB:"
+        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20240912" "OneDrive_ty_30GB:"
