@@ -13,12 +13,12 @@ jobs:
       - name: Deploy rclone
         shell: powershell
         run: |
-          Invoke-WebRequest 'https://downloads.rclone.org/v1.67.0/rclone-v1.67.0-windows-amd64.zip' -OutFile rclone-v1.67.0-windows-amd64.zip
-          unzip rclone-v1.67.0-windows-amd64.zip
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.68.0/rclone-v1.68.0-windows-amd64.zip' -OutFile rclone-v1.68.0-windows-amd64.zip
+          unzip rclone-v1.68.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
 
       - name: Upload the file to OneDrive with rclone
         shell: powershell
         run: |
           echo fuckme, baby > shit3456.iso
-          rclone-v1.67.0-windows-amd64/rclone --config rclone.conf copy -P shit3456.iso "OneDrive_ty_30GB:"
+          rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P shit3456.iso "OneDrive_ty_30GB:"
