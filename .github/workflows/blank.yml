@@ -34,7 +34,7 @@ jobs:
       - name: Calculate md5 checksum
         shell: powershell
         run:
-          md5sum win11-20240912
+          md5sum win11-20240912/*
 
       - name: Deploy rclone
         shell: powershell
