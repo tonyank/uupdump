@@ -11,28 +11,28 @@ jobs:
 
     steps:
       - name: Deploy uupdump
-        shell: powershell
+        shell: pwsh
         run: |
           Invoke-WebRequest "https://github.com/tonyank/20221226-uupdump/raw/main/26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar" -OutFile "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
           tar -xf "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
 
       - name: Run uupdump
-        shell: powershell
+        shell: pwsh
         run: |
           ./uup_download_windows.cmd
           mkdir "win11-20240912"
           move *.ISO "win11-20240912"
 
       - name: 查看文件大小。
-        shell: powershell
+        shell: pwsh
         run: du -sh *
 
       - name: 查看文件目录。
-        shell: powershell
+        shell: pwsh
         run: ls -R
 
       - name: Calculate md5 checksum
-        shell: powershell
+        shell: pwsh
         run:
           md5sum win11-20240912/*
 
