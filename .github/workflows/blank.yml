@@ -17,7 +17,7 @@ jobs:
           tar -xf "26100.1742_amd64_zh-cn_professional_e1d5e11a_convert.tar"
 
       - name: Run uupdump
-        shell: pwsh
+        shell: powershell
         run: |
           ./uup_download_windows.cmd
           mkdir "win11-20240912"
