@@ -10,8 +10,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code (Deploy uupdump)
+      - name: Deploy uupdump
         uses: actions/checkout@v2
+
+      - name: Run uupdump
+        shell: powershell
+        run: |
+          ./uup_download_windows.cmd
 
       - name: 查看文件大小。
         shell: pwsh

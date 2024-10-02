@@ -99,38 +99,6 @@ if NOT [%DETECTED_ERROR%] == [] (
     goto :EOF
 )
 
-echo Downloading Microsoft Store Apps...
-"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -x16 -s16 -j25 -c -R -d"%destDir%" -i"%aria2Script%"
-if %ERRORLEVEL% GTR 0 goto :DOWNLOAD_APPS
-echo.
-
-:DOWNLOAD_UUPS
-echo Retrieving aria2 script for the UUP set...
-"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=8bb7f81c-c236-456c-92ca-1f70baf26f35&pack=zh-cn&edition=professional&aria2=2"
-if %ERRORLEVEL% GTR 0 call :DOWNLOAD_ERROR & exit /b 1
-echo.
-
-for /F "tokens=2 delims=:" %%i in ('findstr #UUPDUMP_ERROR: "%aria2Script%"') do set DETECTED_ERROR=%%i
-if NOT [%DETECTED_ERROR%] == [] (
-    echo Unable to retrieve data from Windows Update servers. Reason: %DETECTED_ERROR%
-    echo If this problem persists, most likely the set you are attempting to download was removed from Windows Update servers.
-    echo.
-    pause
-    goto :EOF
-)
-
-echo Downloading the UUP set...
-"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -x16 -s16 -j5 -c -R -d"%destDir%" -i"%aria2Script%"
-if %ERRORLEVEL% GTR 0 goto :DOWNLOAD_UUPS & exit /b 1
-
-if EXIST convert-UUP.cmd goto :START_CONVERT
-pause
-goto :EOF
-
-:START_CONVERT
-call convert-UUP.cmd
-goto :EOF
-
 :NO_FILE_ERROR
 echo We couldn't find one of needed files for this script.
 pause
