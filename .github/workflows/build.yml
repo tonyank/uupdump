@@ -1,0 +1,23 @@
+# GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
+# 最后一次编辑日期：2024年9月2日
+
+name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
+
+on: [push]
+
+jobs:
+  Build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code (Deploy uupdump)
+        uses: actions/checkout@v2
+
+      - name: 查看文件大小。
+        shell: pwsh
+        run: du -sh *
+
+      - name: 查看文件目录。
+        shell: pwsh
+        run: ls -R
+
