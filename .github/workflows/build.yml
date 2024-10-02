@@ -1,5 +1,5 @@
 # GitHub Actions 脚本_利用 GitHub Actions 来下载并运行 uupdump 脚本、以此来获取 Windows 的 iso 文件。
-# 最后一次编辑日期：2024年9月2日
+# 最后一次编辑日期：2024年10月2日
 
 name: Run modified uupdump script to get Windows 11 iso file and upload it to OneDrive
 
@@ -17,6 +17,8 @@ jobs:
         shell: powershell
         run: |
           ./uup_download_windows.cmd
+          mkdir "win11-20241002"
+          move *.ISO "win11-20241002"
 
       - name: 查看文件大小。
         shell: pwsh
@@ -26,3 +28,18 @@ jobs:
         shell: pwsh
         run: ls -R
 
+      - name: Calculate md5 checksum
+        shell: pwsh
+        run:
+          md5sum win11-20241002/*
+
+      - name: Deploy rclone
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.68.0/rclone-v1.68.0-windows-amd64.zip' -OutFile rclone-v1.68.0-windows-amd64.zip
+          unzip rclone-v1.68.0-windows-amd64.zip
+          echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
+
+      - name: Upload the file to OneDrive with rclone
+        shell: pwsh
+        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20241002" "OneDrive_ty_30GB:"
