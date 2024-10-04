@@ -42,4 +42,4 @@ jobs:
 
       - name: Upload the file to OneDrive with rclone
         shell: pwsh
-        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20241002" "OneDrive_ty_30GB:"
+        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20241002" "OneDrive-30GB-ty:"
