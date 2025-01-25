@@ -17,8 +17,8 @@ jobs:
         shell: powershell
         run: |
           ./uup_download_windows.cmd
-          mkdir "win11-20241002"
-          move *.ISO "win11-20241002"
+          mkdir "win11-20250126"
+          move *.ISO "win11-20250126"
 
       - name: 查看文件大小。
         shell: pwsh
@@ -36,10 +36,10 @@ jobs:
       - name: Deploy rclone
         shell: pwsh
         run: |
-          Invoke-WebRequest 'https://downloads.rclone.org/v1.68.0/rclone-v1.68.0-windows-amd64.zip' -OutFile rclone-v1.68.0-windows-amd64.zip
-          unzip rclone-v1.68.0-windows-amd64.zip
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.69.0/rclone-v1.69.0-windows-amd64.zip' -OutFile rclone-v1.69.0-windows-amd64.zip
+          unzip rclone-v1.69.0-windows-amd64.zip
           echo '${{ secrets.RCLONE_CONF }}' > rclone.conf
 
       - name: Upload the file to OneDrive with rclone
         shell: pwsh
-        run: rclone-v1.68.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20241002" "OneDrive-30GB-ty:"
+        run: rclone-v1.69.0-windows-amd64/rclone --config rclone.conf copy -P "win11-20250126" "OneDrive-30GB-ty:"
