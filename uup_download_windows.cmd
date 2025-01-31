@@ -1,5 +1,5 @@
 @echo off
-:: Generated on 2025-01-25 17:24:53 GMT
+:: Generated on 2025-01-31 06:50:35 GMT
 
 :: Proxy configuration
 :: If you need to configure a proxy to be able to connect to the internet,
@@ -52,7 +52,7 @@ SETLOCAL DISABLEDELAYEDEXPANSION
 goto :EOF
 
 :START_PROCESS
-title 26100.3025_amd64_zh-cn_professional_8cb661e7 download
+title 26100.3037_amd64_zh-cn_professional_31d8d08b download
 
 set "aria2=files\aria2c.exe"
 set "a7z=files\7zr.exe"
@@ -79,7 +79,7 @@ echo.
 
 :DOWNLOAD_APPS
 echo Retrieving aria2 script for Microsoft Store Apps...
-"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=8cb661e7-beea-4a33-9ead-7648f29c83f6&pack=neutral&edition=app&aria2=2"
+"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=31d8d08b-fac4-47c0-8adb-c42dd7dec639&pack=neutral&edition=app&aria2=2"
 echo === 开始 ===
 echo ty备注：在 bash shell 环境下使用 sed 命令处理文件 %aria2Script% 以达到如下目的：
 echo (1) 删除不必要的 Microsoft Store Apps。
@@ -105,7 +105,7 @@ echo.
 
 :DOWNLOAD_UUPS
 echo Retrieving aria2 script for the UUP set...
-"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=8cb661e7-beea-4a33-9ead-7648f29c83f6&pack=zh-cn&edition=professional&aria2=2"
+"%aria2%" --no-conf --async-dns=false --console-log-level=warn --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=31d8d08b-fac4-47c0-8adb-c42dd7dec639&pack=zh-cn&edition=professional&aria2=2"
 if %ERRORLEVEL% GTR 0 call :DOWNLOAD_ERROR & exit /b 1
 echo.
 
