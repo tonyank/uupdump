@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir temp
           move *.ISO temp/
-          md5sum temp
+          md5sum temp/*
 
       - name: Deploy rclone
         shell: pwsh
