@@ -7,35 +7,12 @@ jobs:
     runs-on: windows-2025
 
     steps:
-      - name: 查看磁盘空间。
-        run: df -h
-
-      - name: Deploy uupdump
-        uses: actions/checkout@v2
-
-      - name: Run uupdump
-        shell: cmd
-        run: uup_download_windows.cmd
-
-      - name: 创建临时文件夹、计算 ISO 文件的 MD5 校验值。
-        shell: pwsh
-        run: |
-          mkdir temp
-          move *.ISO temp/
-          md5sum temp/*
-
-      - name: Deploy rclone
-        shell: pwsh
-        run: |
-          Invoke-WebRequest 'https://downloads.rclone.org/v1.69.0/rclone-v1.69.0-windows-amd64.zip' -OutFile rclone.zip
-          unzip rclone.zip
-          echo '${{ secrets.RCLONE_CONF }}' > ./rclone-v1.69.0-windows-amd64/rclone.conf
-          del rclone.zip
-
-      - name: 显示文件树。
-        shell: cmd
-        run: tree /F
-
-      - name: Upload the file to OneDrive with rclone
+      - name: Test
         shell: powershell
-        run: cd rclone-v1.69.0-windows-amd64 && rclone --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
+        run: |
+          echo fuckyou > a.txt
+          mkdir fuck
+          pwd
+          cd fuck
+          pwd
+
