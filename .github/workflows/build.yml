@@ -25,5 +25,6 @@ jobs:
         shell: pwsh
         run: |
           cd rclone-v1.69.0-windows-amd64
-          rclone.exe --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
+          ls
+          # rclone.exe --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
 
