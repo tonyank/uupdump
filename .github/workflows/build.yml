@@ -25,5 +25,5 @@ jobs:
         shell: powershell
         run: |
           cd rclone-v1.69.0-windows-amd64
-          rclone --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
+          rclone.exe --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
 
