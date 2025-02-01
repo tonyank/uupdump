@@ -7,12 +7,23 @@ jobs:
     runs-on: windows-2025
 
     steps:
-      - name: Test
+      - name: Deploy rclone
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://downloads.rclone.org/v1.69.0/rclone-v1.69.0-windows-amd64.zip' -OutFile rclone.zip
+          unzip rclone.zip
+          echo '${{ secrets.RCLONE_CONF }}' > ./rclone-v1.69.0-windows-amd64/rclone.conf
+          del rclone.zip
+          mkdir temp
+          touch fuckyou123.txt
+
+      - name: 显示文件树。
+        shell: cmd
+        run: tree /F
+
+      - name: Upload the file to OneDrive with rclone
         shell: powershell
         run: |
-          echo fuckyou > a.txt
-          mkdir fuck
-          pwd
-          cd fuck
-          pwd
+          cd rclone-v1.69.0-windows-amd64
+          rclone --config rclone.conf copy -P ../temp "OneDrive_ty_30GB:"
 
